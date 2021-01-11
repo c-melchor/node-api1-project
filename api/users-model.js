@@ -1,6 +1,6 @@
 const shortid = require("shortid");
 
-const users = [
+let users = [
   {
     id: shortid.generate(),
     name: "Christina",
@@ -19,6 +19,13 @@ module.exports = {
   },
   findById(id) {
     const user = users.find(u => u.id === id);
+    return Promise.resolve(user);
+  },
+  delete(id) {
+    const user = users.find(user => user.id === id);
+    if (!user) return Promise.resolve(null);
+
+    users = users.filter(u => u.id !== id);
     return Promise.resolve(user);
   }
 };
