@@ -32,5 +32,14 @@ module.exports = {
     const newUser = { id: shortid.generate(), name: name, bio: bio };
     users.push(newUser);
     return Promise.resolve(newUser);
+  },
+
+  update(id, changes) {
+    const user = users.find(user => user.id === id);
+    if (!user) return Promise.resolve(null);
+
+    const editedUser = { ...changes, id };
+    users = users.map(u => (u.id === id ? editedUser : u));
+    return Promise.resolve(editedUser);
   }
 };

@@ -58,4 +58,23 @@ server.post("/api/users", async (req, res) => {
   }
 });
 
+server.put("/api/users/:id", async (req, res) => {
+  const id = req.params.id;
+  const changes = req.body;
+
+  if (!changes.name || !changes.bio || changes.id === undefined) {
+    res.status(400).json({ message: "all fields required" });
+  } else {
+    try {
+      const edited = await Users.update(id, changes);
+      if (!edited) {
+        res.status(404).json({ message: `User with id ${id} not found` });
+      } else {
+        res.status(200).json(edited);
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+});
 module.exports = server;
