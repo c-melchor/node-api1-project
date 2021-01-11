@@ -44,4 +44,18 @@ server.delete("/api/users/:id", (req, res) => {
     });
 });
 
+server.post("/api/users", async (req, res) => {
+  const user = req.body;
+  if (!user.name || !user.bio) {
+    res.status(400).json({ message: "Name and Bio required" });
+  } else {
+    try {
+      const newlyMadeUser = await Users.create(user);
+      res.status(201).json(newlyMadeUser);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+});
+
 module.exports = server;

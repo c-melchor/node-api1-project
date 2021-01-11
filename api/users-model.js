@@ -27,5 +27,10 @@ module.exports = {
 
     users = users.filter(u => u.id !== id);
     return Promise.resolve(user);
+  },
+  create({ name, bio }) {
+    const newUser = { id: shortid.generate(), name: name, bio: bio };
+    users.push(newUser);
+    return Promise.resolve(newUser);
   }
 };
