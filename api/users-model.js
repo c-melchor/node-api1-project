@@ -16,5 +16,9 @@ const users = [
 module.exports = {
   findAll() {
     return Promise.resolve(users);
+  },
+  findById(id) {
+    const user = users.find(u => u.id === id);
+    return Promise.resolve(user);
   }
 };
